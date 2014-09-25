@@ -106,7 +106,7 @@ function:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data2</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nb">float</span><span class="o">*&gt;</span><span class="n">mem</span><span class="o">.</span><span class="n">alloc</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="n">sizeof</span><span class="p">(</span><span class="nb">float</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>The Pool object saves the memory addresses in a vector, and frees them when the
+<p>The Pool object saves the memory addresses internally, and frees them when the
 object is garbage collected. Typically you&#8217;ll attach the Pool to some cdef&#8217;d
 class. This is particularly handy for deeply nested structs, which have
 complicated initialization functions. Just pass the pool object into the
