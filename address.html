@@ -100,6 +100,11 @@
 <em class="property">class </em><tt class="descclassname">cymem.cymem.</tt><tt class="descname">Address</tt><a class="headerlink" href="#cymem.cymem.Address" title="Permalink to this definition">¶</a></dt>
 <dd><p>A block of number * size-bytes of 0-initialized memory, tied to a Python
 ref-counted object. When the object is garbage collected, the memory is freed.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">cymem.cymem</span> <span class="nn">cimport</span> <span class="nn">Address</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cdef</span> <span class="n">Address</span> <span class="n">address</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">sizeof</span><span class="p">(</span><span class="n">double</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d10</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">double</span><span class="o">*&gt;</span><span class="n">address</span><span class="o">.</span><span class="n">ptr</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
