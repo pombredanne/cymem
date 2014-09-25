@@ -1,0 +1,31 @@
+cymem.cymem.Pool
+================
+
+.. autoclass:: cymem.cymem.Pool
+   :members:
+
+   .. method:: void* alloc(self, size_t number, size_t elem_size) except NULL
+
+      Allocate a 0-initialized *number* * *elem_size*-byte block of memory, and
+      remember its address. The block will be freed when the Pool is garbage
+      collected.
+ 
+   .. method:: void* realloc(self, void* p, size_t new_size) except NULL
+
+      Resize the memory block pointed to by p to new_size bytes, returning
+      a non-NULL pointer to the new block. The contents will be unchanged to
+      the minimum of the old and the new sizes.
+        
+      If p is not in the Pool or new_size is 0, a MemoryError is raised. If p
+      is not found in the Pool, a KeyError is raised. If the call to PyMem_Realloc
+      fails, a MemoryError is raised.
+ 
+   .. method:: void* free(self, void* p) except NULL
+    
+      Frees the memory block pointed to by p, which must have been returned
+      by a previous call to Pool.alloc.  You don't necessarily need to free
+      memory addresses manually --- you can instead let the Pool be garbage
+      collected, at which point all the memory will be freed.
+        
+      If p is not in Pool.addresses, a KeyError is raised.
+ 

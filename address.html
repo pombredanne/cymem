@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Search &mdash; cymem 0.6 documentation</title>
+  <title>cymem.cymem.Address &mdash; cymem 0.6 documentation</title>
   
 
   
@@ -28,7 +28,8 @@
   
 
   
-    <link rel="top" title="cymem 0.6 documentation" href="index.html"/> 
+    <link rel="top" title="cymem 0.6 documentation" href="index.html"/>
+        <link rel="prev" title="cymem.cymem.Pool" href="pool.html"/> 
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
@@ -44,7 +45,7 @@
       <div class="wy-side-nav-search">
         <a href="index.html" class="fa fa-home"> cymem</a>
         <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id ="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -55,9 +56,9 @@
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
         
         
-            <ul>
+            <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="pool.html">cymem.cymem.Pool</a></li>
-<li class="toctree-l1"><a class="reference internal" href="address.html">cymem.cymem.Address</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">cymem.cymem.Address</a></li>
 </ul>
 
         
@@ -81,8 +82,10 @@
   <ul class="wy-breadcrumbs">
     <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li></li>
+    <li>cymem.cymem.Address</li>
       <li class="wy-breadcrumbs-aside">
+        
+          <a href="_sources/address.txt" rel="nofollow"> View page source</a>
         
       </li>
   </ul>
@@ -90,22 +93,53 @@
 </div>
           <div role="main">
             
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search
-      functionality.
-    </p>
-  </div>
-  </noscript>
+  <div class="section" id="cymem-cymem-address">
+<h1>cymem.cymem.Address<a class="headerlink" href="#cymem-cymem-address" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="cymem.cymem.Address">
+<em class="property">class </em><tt class="descclassname">cymem.cymem.</tt><tt class="descname">Address</tt><a class="headerlink" href="#cymem.cymem.Address" title="Permalink to this definition">¶</a></dt>
+<dd><p>A block of number * size-bytes of 0-initialized memory, tied to a Python
+ref-counted object. When the object is garbage collected, the memory is freed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>number</strong> (<em>size_t</em>) &#8211; The number of elements in the memory block.</li>
+<li><strong>elem_size</strong> (<em>size_t</em>) &#8211; The size of each element.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="Address.ptr">
+<tt class="descname">ptr</tt><a class="headerlink" href="#Address.ptr" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>void*</em></p>
+<p>Pointer to the memory block.</p>
+</dd></dl>
 
-  
-  <div id="search-results">
-  
-  </div>
+<dl class="attribute">
+<dt id="Address.addr">
+<tt class="descname">addr</tt><a class="headerlink" href="#Address.addr" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>size_t</em></p>
+<p>Read-only size_t cast of the pointer.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
 
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="pool.html" class="btn btn-neutral" title="cymem.cymem.Pool"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -141,7 +175,6 @@
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="_static/searchtools.js"></script>
 
   
 
@@ -157,14 +190,7 @@
           SphinxRtdTheme.StickyNav.enable();
       });
   </script>
-  
-  <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script type="text/javascript" id="searchindexloader"></script>
    
-
 
 </body>
 </html>
