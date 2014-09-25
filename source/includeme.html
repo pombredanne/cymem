@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Cython Memory Helper &mdash; cymem 0.6 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.6',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="cymem 0.6 documentation" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../index.html">cymem 0.6 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="cython-memory-helper">
+<h1>Cython Memory Helper<a class="headerlink" href="#cython-memory-helper" title="Permalink to this headline">¶</a></h1>
+<p>cymem provides two small memory-management helpers for Cython. They make it
+easy to tie memory to a Python object&#8217;s life-cycle, so that the memory is freed
+when the object is garbage collected.</p>
+<p>The most useful is cymem.Pool, which acts as a thin wrapper around the calloc
+function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">cymem.cymem</span> <span class="nn">cimport</span> <span class="nn">Pool</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cdef</span> <span class="n">Pool</span> <span class="n">mem</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data1</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nb">int</span><span class="o">*&gt;</span><span class="n">mem</span><span class="o">.</span><span class="n">alloc</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">sizeof</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data2</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nb">float</span><span class="o">*&gt;</span><span class="n">mem</span><span class="o">.</span><span class="n">alloc</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="n">sizeof</span><span class="p">(</span><span class="nb">float</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The Pool object saves the memory addresses in a vector, and frees them when the
+object is garbage collected. Typically you&#8217;ll attach the Pool to some cdef&#8217;d
+class. This is particularly handy for deeply nested structs, which have
+complicated initialization functions. Just pass the pool object into the
+initializer, and you don&#8217;t have to worry about freeing your struct at all &#8212;
+all of the calls to Pool.alloc will be automatically freed when the Pool
+expires.</p>
+<p>The other class, cymem.Address, provides the same sort of functionality, but
+for a single memory address:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">cymem.cymem</span> <span class="nn">cimport</span> <span class="nn">Address</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cdef</span> <span class="n">Address</span> <span class="n">mem</span> <span class="o">=</span> <span class="n">Address</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">sizeof</span><span class="p">(</span><span class="nb">float</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data1</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nb">float</span><span class="o">*&gt;</span><span class="n">mem</span><span class="o">.</span><span class="n">addr</span>
+</pre></div>
+</div>
+<p>I find I have to use C data structures a lot in my Cython code, because you
+can&#8217;t put Python objects into arrays or vectors. But, memory management is
+hard, and debugging memory leaks and double-free errors is time-consuming.
+Since Python is garbage collected, we may as well use it to make our lives
+easier.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/source/includeme.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../index.html">cymem 0.6 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, Matthew Honnibal.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>
