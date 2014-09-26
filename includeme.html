@@ -147,6 +147,10 @@ can&#8217;t be a Python class.  We can write this easily enough in Cython:</p>
     <span class="k">cdef</span> <span class="kt">SparseMatrix</span>** <span class="nf">matrices</span>
 
     <span class="k">def</span> <span class="nf">__cinit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">list</span> <span class="n">py_matrices</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="mf">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">matrices</span> <span class="o">=</span> <span class="bp">NULL</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">list</span> <span class="n">py_matrices</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">py_matrices</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">matrices</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">SparseMatrix</span><span class="o">**&gt;</span><span class="n">calloc</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">py_matrices</span><span class="p">),</span> <span class="n">sizeof</span><span class="p">(</span><span class="n">SparseMatrix</span><span class="o">*</span><span class="p">))</span>
 
@@ -219,6 +223,11 @@ writing these deallocators at all. Instead, you write as follows:</p>
     <span class="k">cdef</span> <span class="kt">Pool</span> <span class="nf">mem</span>
 
     <span class="k">def</span> <span class="nf">__cinit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">list</span> <span class="n">py_matrices</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mem</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="mf">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">matrices</span> <span class="o">=</span> <span class="bp">NULL</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">list</span> <span class="n">py_matrices</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mem</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">py_matrices</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">matrices</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">SparseMatrix</span><span class="o">**&gt;</span><span class="bp">self</span><span class="o">.</span><span class="n">mem</span><span class="o">.</span><span class="n">alloc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">,</span> <span class="n">sizeof</span><span class="p">(</span><span class="n">SparseMatrix</span><span class="o">*</span><span class="p">))</span>
@@ -247,7 +256,7 @@ writing these deallocators at all. Instead, you write as follows:</p>
 MatrixArray object is garbage-collected, the Pool object will also be garbage
 collected, which triggers a call to Pool.__dealloc__. The Pool then frees all of
 its addresses. This saves you from walking back over your nested data structures
-to free them, eliminating a common class of bugs.</p>
+to free them, eliminating a common class of errors.</p>
 </div>
 
 
